@@ -1,4 +1,4 @@
-me = imread("low_quality.JPG");
+me = imread("Lena2.JPG");
 me_2 = rgb2gray(me);
 noise = imnoise(me_2, 'gaussian', 0.1);
 len = 3;
@@ -24,3 +24,23 @@ figure, imshow(frest3)
 % Least Square Filters
 frest4 = deconvreg(g, PSF, 0.4, [1e-7, 1e7]);
 figure, imshow(frest2)
+
+% Lucy Richardson Filter
+
+g = checkerboard(8);
+
+ 
+PSF = fspecial('gaussian', 7, 10);
+SD = 0.01;
+g = imnoise(imfilter(g, PSF), 'gaussian', 0, SD^2);
+DAMPAR = 10*SD;
+
+LIM = ceil(size(PSF, 1) / 2);
+WEIGHT = zeros(size(g));
+WEIGHT(LIM + 1: end - LIM, LIM + 1:end - LIM) = 1;
+NUMIT = 5;
+
+ 
+
+f5 = deconvlucy(g, PSF, NUMIT, DAMPAR, WEIGHT);
+figure, imshow(f5)

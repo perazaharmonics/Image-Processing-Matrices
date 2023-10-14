@@ -1,2 +1,2 @@
-# mVisual
-Image processing filters and applications
+# mMirror
+Image processing filters and applications of those filters
